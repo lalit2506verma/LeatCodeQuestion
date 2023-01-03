@@ -5,26 +5,28 @@ public class DetectCapital {
     }
 
     static boolean detectCapitalUse(String word){
-        // intitializing the flag as so that flag++ when there is any lowercase come
-        int flag = 0;
         int length = word.length();
-        if(length == 1){
+
+        if(length == 0 || length == 1){
             return true;
         }
 
-        for(int i = 0; i < word.length(); i++){
-            if(!Character.isUpperCase(word.charAt(i))){
-                flag++;
+        if(Character.isUpperCase(word.charAt(0))){
+            boolean isFirstCapital = Character.isUpperCase(word.charAt(1));
+            for(int i = 2; i < length; i++) {
+                boolean isOtherCapital = Character.isUpperCase(word.charAt(i));
+                if(isFirstCapital != isOtherCapital){
+                    return false;
+                }
             }
         }
-        if(flag == 0 || flag == word.length() - 1){
-            return true;
-        }
-        else if(flag == 1 && Character.isUpperCase(word.charAt(0))){
-            return true;
-        }
         else{
-            return false;
+            for(int i = 1; i < length; i++){
+                if(Character.isUpperCase(word.charAt(i))){
+                    return false;
+                }
+            }
         }
+        return true;
     }
 }
